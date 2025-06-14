@@ -2,7 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter, Plus, Search } from "lucide-react";
 
-export function Header() {
+interface IHeader {
+  onAddBook: () => void;
+}
+
+export function Header({ onAddBook }: IHeader) {
   return (
     <header className="w-full bg-white shadow-lg border-b border-gray-200">
       <div className="container mx-auto w-full py-6 flex items-center justify-between">
@@ -23,7 +27,7 @@ export function Header() {
             Filtros
           </Button>
 
-          <Button>
+          <Button onClick={onAddBook}>
             <Plus />
             Adicionar livro
           </Button>
