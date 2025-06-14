@@ -9,7 +9,7 @@ export function Card({ children, className }: ICard) {
   return (
     <div
       className={cn(
-        "px-4 py-2 bg-white border border-gray-200 rounded-lg",
+        "p-4 bg-white border border-gray-200 rounded-lg",
         className,
       )}
     >

@@ -7,21 +7,23 @@ const BOOKS_MOCK: IBook[] = [
   {
     _id: "1",
     title: "Livro 1",
-    description: "Descrição do Livro 1",
+    description: "Este livro é muito interessante e aborda diversos temas.",
     status: "BOUGHT",
     addedAt: new Date("2023-01-01"),
   },
   {
     _id: "2",
     title: "Livro 2",
-    description: "Descrição do Livro 2",
+    description:
+      "Este livro é uma continuação do primeiro e traz novas aventuras.",
     status: "READING",
     addedAt: new Date("2023-02-01"),
   },
   {
     _id: "3",
     title: "Livro 3",
-    description: "Descrição do Livro 3",
+    description:
+      "Esse aqui é um livro de ficção científica que explora o futuro.",
     status: "FINISHED",
     addedAt: new Date("2023-03-01"),
   },
@@ -29,10 +31,10 @@ const BOOKS_MOCK: IBook[] = [
 
 export default function App() {
   return (
-    <div className="w-screen h-screen bg-gray-100">
+    <div className="w-screen min-h-screen bg-gray-100">
       <Header />
 
-      <main className="container mx-auto w-screen h-screen py-16 overflow-y-scroll">
+      <main className="container mx-auto w-screen py-16">
         <div className="space-y-4">
           <h2 className="text-xl font-medium">Minha biblioteca</h2>
 

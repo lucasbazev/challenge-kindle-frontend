@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Filter, Search } from "lucide-react";
+import { Filter, Plus, Search } from "lucide-react";
 
 export function Header() {
   return (
@@ -18,9 +18,14 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button>
+          <Button variant="outline">
             <Filter />
             Filtros
+          </Button>
+
+          <Button>
+            <Plus />
+            Adicionar livro
           </Button>
         </div>
       </div>
