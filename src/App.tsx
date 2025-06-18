@@ -11,7 +11,6 @@ const BOOKS_MOCK: IBook[] = [
     title: "Livro 1",
     description: "Este livro é muito interessante e aborda diversos temas.",
     status: "BOUGHT",
-    addedAt: new Date("2023-01-01"),
   },
   {
     _id: "2",
@@ -19,7 +18,6 @@ const BOOKS_MOCK: IBook[] = [
     description:
       "Este livro é uma continuação do primeiro e traz novas aventuras.",
     status: "READING",
-    addedAt: new Date("2023-02-01"),
   },
   {
     _id: "3",
@@ -27,7 +25,6 @@ const BOOKS_MOCK: IBook[] = [
     description:
       "Esse aqui é um livro de ficção científica que explora o futuro.",
     status: "FINISHED",
-    addedAt: new Date("2023-03-01"),
   },
 ];
 

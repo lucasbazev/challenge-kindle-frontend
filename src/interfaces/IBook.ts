@@ -5,5 +5,4 @@ export interface IBook {
   title: string;
   description: string;
   status: BookStatus;
-  addedAt: Date;
 }
