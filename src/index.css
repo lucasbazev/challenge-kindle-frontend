@@ -115,7 +115,16 @@
     @apply border-border outline-ring/50;
     font-family: Inter, sans-serif;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  .primary-gradient {
+    @apply bg-gradient-to-br from-blue-500 to-blue-800;
+  }
+
+  .primary-gradient-text {
+    @apply bg-gradient-to-br from-blue-500 to-blue-800 bg-clip-text text-transparent;
   }
 }

@@ -10,7 +10,7 @@ export function Header({ onAddBook }: IHeader) {
   return (
     <header className="w-full bg-white shadow-lg border-b border-gray-200">
       <div className="container mx-auto w-full py-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-800">Kindlefy</h1>
+        <h1 className="text-3xl font-bold primary-gradient-text">Kindlefy</h1>
 
         <div className="relative">
           <Input
