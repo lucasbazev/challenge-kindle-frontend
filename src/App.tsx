@@ -3,35 +3,14 @@ import { BookCard } from "./components/app/BookCard";
 import { BookModal } from "./components/app/BookModal";
 import { Header } from "./components/app/Header";
 import { BlurFade } from "./components/ui/blur-fade";
-import type { IBook } from "./interfaces/IBook";
-
-const BOOKS_MOCK: IBook[] = [
-  {
-    _id: "1",
-    title: "Livro 1",
-    description: "Este livro é muito interessante e aborda diversos temas.",
-    status: "BOUGHT",
-  },
-  {
-    _id: "2",
-    title: "Livro 2",
-    description:
-      "Este livro é uma continuação do primeiro e traz novas aventuras.",
-    status: "READING",
-  },
-  {
-    _id: "3",
-    title: "Livro 3",
-    description:
-      "Esse aqui é um livro de ficção científica que explora o futuro.",
-    status: "FINISHED",
-  },
-];
+import { Skeleton } from "./components/ui/skeleton";
 
 export default function App() {
   const {
     selectedBook,
     bookModalOpen,
+    books,
+    loading,
     handleAddBook,
     handleSelectBook,
     handleCloseBookModal,
@@ -46,15 +25,20 @@ export default function App() {
           <h2 className="text-xl font-medium">Minha biblioteca</h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {BOOKS_MOCK.map((book, idx) => (
-              <BlurFade delay={idx * 0.2} key={book._id}>
-                <BookCard
-                  key={book._id}
-                  book={book}
-                  onClick={handleSelectBook}
-                />
-              </BlurFade>
-            ))}
+            {loading
+              ? Array(3)
+                  .fill(null)
+                  .map((_value, idx) => (
+                    <Skeleton
+                      key={idx}
+                      className="bg-gray-200 border border-gray-300 h-20 w-full"
+                    />
+                  ))
+              : books?.map((book, idx) => (
+                  <BlurFade delay={idx * 0.2} key={book._id}>
+                    <BookCard book={book} onClick={handleSelectBook} />
+                  </BlurFade>
+                ))}
           </div>
         </div>
       </main>

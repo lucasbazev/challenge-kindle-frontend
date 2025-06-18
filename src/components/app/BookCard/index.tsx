@@ -19,8 +19,9 @@ export function BookCard({ book, className, onClick }: IBookCard) {
     >
       <div className="space-y-1">
         <h3 className="font-semibold">{book.title}</h3>
+
         <p className="text-sm text-muted-foreground truncate">
-          {book.description}
+          {book?.description || "Livro sem descrição."}
         </p>
       </div>
     </Card>
