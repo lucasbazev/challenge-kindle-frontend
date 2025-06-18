@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import type { IBook } from "./interfaces/IBook";
 import { toast } from "sonner";
+import { getAll } from "./app.repository";
+import { DevLogger } from "./lib/logger";
 
 export function useAppViewModel() {
   const [bookModalOpen, setBookModalOpen] = useState<boolean>(false);
@@ -12,17 +14,17 @@ export function useAppViewModel() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/books");
-      const data = await response.json();
+      const data = await getAll();
 
       setBooks(data);
     } catch (error) {
-      console.error("Error fetching books:", error);
+      DevLogger.error("FETCH BOOKS ERROR:", error);
 
-      toast.error("Houve um erro ao buscar os livros.");
+      toast.error("Houve um erro ao buscar os livros.", {
+        description: "Tente novamente mais tarde.",
+      });
     } finally {
       setLoading(false);
-      console.log("Books fetched successfully");
     }
   }
 

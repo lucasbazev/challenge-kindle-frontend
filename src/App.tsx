@@ -1,9 +1,8 @@
 import { useAppViewModel } from "./app.view.model";
-import { BookCard } from "./components/app/BookCard";
+import { BookCard, BookCardSkeleton } from "./components/app/BookCard";
 import { BookModal } from "./components/app/BookModal";
 import { Header } from "./components/app/Header";
 import { BlurFade } from "./components/ui/blur-fade";
-import { Skeleton } from "./components/ui/skeleton";
 
 export default function App() {
   const {
@@ -25,20 +24,17 @@ export default function App() {
           <h2 className="text-xl font-medium">Minha biblioteca</h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {loading
-              ? Array(3)
-                  .fill(null)
-                  .map((_value, idx) => (
-                    <Skeleton
-                      key={idx}
-                      className="bg-gray-200 border border-gray-300 h-20 w-full"
-                    />
-                  ))
-              : books?.map((book, idx) => (
-                  <BlurFade delay={idx * 0.2} key={book._id}>
-                    <BookCard book={book} onClick={handleSelectBook} />
-                  </BlurFade>
-                ))}
+            {loading ? (
+              <BookCardSkeleton />
+            ) : books?.length ? (
+              books?.map((book, idx) => (
+                <BlurFade delay={idx * 0.2} key={book._id}>
+                  <BookCard book={book} onClick={handleSelectBook} />
+                </BlurFade>
+              ))
+            ) : (
+              <p>Nenhum livro na sua biblioteca.</p>
+            )}
           </div>
         </div>
       </main>
