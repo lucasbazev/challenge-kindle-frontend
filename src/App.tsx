@@ -27,11 +27,11 @@ export default function App() {
         handleChangeSearch={handleChangeSearch}
       />
 
-      <main className="container mx-auto w-screen py-16">
+      <main className="container mx-auto w-screen pt-12 pb-24 lg:pt-16 px-4 lg:px-0">
         <div className="space-y-4">
-          <h2 className="text-xl font-medium">Minha biblioteca</h2>
+          <h2 className="lg:text-xl font-medium">Minha biblioteca</h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {loading ? (
               <BookCardSkeleton />
             ) : books?.length ? (
