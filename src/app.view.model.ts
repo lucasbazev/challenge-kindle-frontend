@@ -8,13 +8,25 @@ export function useAppViewModel() {
   const [bookModalOpen, setBookModalOpen] = useState<boolean>(false);
   const [selectedBook, setSelectedBook] = useState<IBook | null>(null);
   const [books, setBooks] = useState<IBook[]>([]);
+  const [statusFilter, setStatusFilter] = useState<string>("ALL");
   const [loading, setLoading] = useState<boolean>(false);
 
-  async function fetchBooks(): Promise<void> {
+  function handleChangeFilter(value: string) {
+    setStatusFilter(value);
+    fetchBooks({ status: value === "ALL" ? null : value });
+  }
+
+  async function fetchBooks(filters?: Record<string, any>): Promise<void> {
     setLoading(true);
 
+    const sanitizedFilters = Object.fromEntries(
+      Object.entries(filters || {}).filter((entry) => !!entry[1]),
+    );
+
+    const query = new URLSearchParams(sanitizedFilters || {});
+
     try {
-      const data = await getAll();
+      const data = await getAll(query.toString());
 
       setBooks(data);
     } catch (error) {
@@ -51,9 +63,11 @@ export function useAppViewModel() {
     loading,
     bookModalOpen,
     selectedBook,
+    statusFilter,
     handleClickAdd,
     handleSelectBook,
     handleCloseBookModal,
     refetch: fetchBooks,
+    handleChangeFilter,
   };
 }

@@ -9,16 +9,21 @@ export default function App() {
     selectedBook,
     bookModalOpen,
     books,
+    statusFilter,
     loading,
     handleClickAdd,
     handleSelectBook,
     handleCloseBookModal,
     refetch,
+    handleChangeFilter,
   } = useAppViewModel();
 
   return (
     <div className="w-screen min-h-screen bg-gray-100">
-      <Header onAddBook={handleClickAdd} />
+      <Header
+        onAddBook={handleClickAdd}
+        handleChangeFilter={handleChangeFilter}
+      />
 
       <main className="container mx-auto w-screen py-16">
         <div className="space-y-4">
@@ -34,7 +39,11 @@ export default function App() {
                 </BlurFade>
               ))
             ) : (
-              <p>Nenhum livro na sua biblioteca.</p>
+              <p className="text-gray-500">
+                {statusFilter
+                  ? "Nenhum livro na sua biblioteca corresponde aos filtros aplicados. Tente alterar os filtros para ver outros resultados."
+                  : "Nenhum livro na sua biblioteca no momento. Tente adicionar um livro clicando no botão do cabeçalho da página."}
+              </p>
             )}
           </div>
         </div>
