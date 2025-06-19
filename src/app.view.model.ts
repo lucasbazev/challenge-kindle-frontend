@@ -54,5 +54,6 @@ export function useAppViewModel() {
     handleClickAdd,
     handleSelectBook,
     handleCloseBookModal,
+    refetch: fetchBooks,
   };
 }

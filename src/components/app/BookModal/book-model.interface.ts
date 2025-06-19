@@ -6,4 +6,5 @@ export interface IBookModal extends DialogProps {
   isOpen: boolean;
   loadingAction?: boolean;
   onClose: () => void;
+  refetch: () => void;
 }

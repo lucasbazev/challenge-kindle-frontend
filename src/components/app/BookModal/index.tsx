@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import type { IBookModal } from "./book-model.interface";
 import { useBookModalViewModel } from "./book-modal.view.model";
-import { Loading } from "../Loading";
+import { LoadingSpinner } from "../Loading";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -31,9 +31,15 @@ import {
 import { cn } from "@/lib/utils";
 
 export function BookModal({ ...props }: IBookModal) {
-  const { book, isOpen, onClose, loadingAction } = props;
-  const { form, modalTitle, handleAddBook, handleRemoveBook } =
-    useBookModalViewModel(props);
+  const { book, isOpen, onClose } = props;
+  const {
+    form,
+    modalTitle,
+    loadingAction,
+    loadingStatusChange,
+    handleAddBook,
+    handleRemoveBook,
+  } = useBookModalViewModel(props);
 
   return (
     <Dialog
@@ -97,36 +103,40 @@ export function BookModal({ ...props }: IBookModal) {
             <div className="space-y-2">
               <Label>Status</Label>
 
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Status atual de leitura" />
-                          </SelectTrigger>
-                        </FormControl>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Status atual de leitura" />
+                            </SelectTrigger>
+                          </FormControl>
 
-                        <SelectContent>
-                          {BOOK_STATUS_OPTIONS.map((option) => (
-                            <SelectItem key={option.value} {...option}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
+                          <SelectContent>
+                            {BOOK_STATUS_OPTIONS.map((option) => (
+                              <SelectItem key={option.value} {...option}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {loadingStatusChange && <LoadingSpinner />}
+              </div>
             </div>
           </div>
 
@@ -152,7 +162,13 @@ export function BookModal({ ...props }: IBookModal) {
                   "border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-200",
               )}
             >
-              {loadingAction ? <Loading /> : book?._id ? "Remover" : "Salvar"}
+              {loadingAction ? (
+                <LoadingSpinner />
+              ) : book?._id ? (
+                "Remover"
+              ) : (
+                "Salvar"
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>

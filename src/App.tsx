@@ -13,6 +13,7 @@ export default function App() {
     handleClickAdd,
     handleSelectBook,
     handleCloseBookModal,
+    refetch,
   } = useAppViewModel();
 
   return (
@@ -44,6 +45,7 @@ export default function App() {
           isOpen={bookModalOpen}
           book={selectedBook}
           onClose={handleCloseBookModal}
+          refetch={refetch}
         />
       )}
     </div>

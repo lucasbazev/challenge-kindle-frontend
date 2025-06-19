@@ -14,7 +14,7 @@ export async function getAll(): Promise<IBook[]> {
   return await response.json();
 }
 
-export async function create(payload: CreateBookDTO): Promise<IBook> {
+export async function createBook(payload: CreateBookDTO): Promise<IBook> {
   const response = await fetch(`${BASE_URL}/books`, {
     method: "POST",
     headers: {
