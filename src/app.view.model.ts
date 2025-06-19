@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { IBook } from "./interfaces/IBook";
 import { toast } from "sonner";
 import { getAll } from "./app.repository";
@@ -10,11 +10,44 @@ export function useAppViewModel() {
   const [books, setBooks] = useState<IBook[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
   const [loading, setLoading] = useState<boolean>(false);
+  const [query, setQuery] = useState<Record<string, any>>();
 
-  function handleChangeFilter(value: string) {
-    setStatusFilter(value);
-    fetchBooks({ status: value === "ALL" ? null : value });
-  }
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleChangeFilter = useCallback(
+    (value: string) => {
+      setStatusFilter(value);
+
+      setQuery((prevQuery) => ({
+        ...prevQuery,
+        status: value === "ALL" ? null : value,
+      }));
+
+      fetchBooks({ ...query, status: value === "ALL" ? null : value });
+    },
+    [query],
+  );
+
+  const handleChangeSearch = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newSearchTerm = event.target.value;
+
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
+      debounceTimerRef.current = setTimeout(() => {
+        setQuery((prevQuery) => ({ ...prevQuery, title: newSearchTerm }));
+
+        if (!newSearchTerm.trim()) {
+          fetchBooks({ ...query, title: null });
+        } else {
+          fetchBooks({ ...query, title: newSearchTerm.trim() });
+        }
+      }, 500);
+    },
+    [query],
+  );
 
   async function fetchBooks(filters?: Record<string, any>): Promise<void> {
     setLoading(true);
@@ -67,7 +100,8 @@ export function useAppViewModel() {
     handleClickAdd,
     handleSelectBook,
     handleCloseBookModal,
-    refetch: fetchBooks,
     handleChangeFilter,
+    handleChangeSearch,
+    refetch: fetchBooks,
   };
 }

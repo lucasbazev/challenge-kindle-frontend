@@ -14,8 +14,9 @@ export default function App() {
     handleClickAdd,
     handleSelectBook,
     handleCloseBookModal,
-    refetch,
     handleChangeFilter,
+    handleChangeSearch,
+    refetch,
   } = useAppViewModel();
 
   return (
@@ -23,6 +24,7 @@ export default function App() {
       <Header
         onAddBook={handleClickAdd}
         handleChangeFilter={handleChangeFilter}
+        handleChangeSearch={handleChangeSearch}
       />
 
       <main className="container mx-auto w-screen py-16">

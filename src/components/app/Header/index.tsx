@@ -14,10 +14,15 @@ import { Label } from "@/components/ui/label";
 interface IHeader {
   onAddBook: () => void;
   handleChangeFilter?: (value: string) => void;
+  handleChangeSearch?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   statusFilter?: string;
 }
 
-export function Header({ onAddBook, handleChangeFilter }: IHeader) {
+export function Header({
+  onAddBook,
+  handleChangeFilter,
+  handleChangeSearch,
+}: IHeader) {
   return (
     <header className="w-full bg-white shadow-lg border-b border-gray-200">
       <div className="container mx-auto w-full py-6 flex items-center justify-between">
@@ -27,6 +32,7 @@ export function Header({ onAddBook, handleChangeFilter }: IHeader) {
           <Input
             placeholder="Pesquisar na sua biblioteca"
             className="p-5 pl-8 w-96"
+            onChange={handleChangeSearch}
           />
 
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
