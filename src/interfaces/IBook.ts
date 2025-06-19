@@ -1,4 +1,4 @@
-export type BookStatus = "BOUGHT" | "READING" | "FINISHED";
+export type BookStatus = "WISHLIST" | "READING" | "FINISHED";
 
 export interface IBook {
   _id: string;

@@ -23,7 +23,7 @@ export function useBookModalViewModel(props: IBookModal) {
     return {
       title: "",
       description: "",
-      status: "BOUGHT" as BookStatus,
+      status: "WISHLIST" as BookStatus,
     };
   }, [props.book]);
 

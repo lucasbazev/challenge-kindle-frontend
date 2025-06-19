@@ -7,8 +7,8 @@ interface BookStatusOption {
 
 export const BOOK_STATUS_OPTIONS: BookStatusOption[] = [
   {
-    value: "BOUGHT",
-    label: "Comprado",
+    value: "WISHLIST",
+    label: "Quero ler",
   },
   {
     value: "READING",
