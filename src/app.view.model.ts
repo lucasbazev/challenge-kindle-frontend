@@ -32,7 +32,7 @@ export function useAppViewModel() {
     fetchBooks();
   }, []);
 
-  function handleAddBook() {
+  function handleClickAdd() {
     setBookModalOpen(true);
   }
 
@@ -51,7 +51,7 @@ export function useAppViewModel() {
     loading,
     bookModalOpen,
     selectedBook,
-    handleAddBook,
+    handleClickAdd,
     handleSelectBook,
     handleCloseBookModal,
   };

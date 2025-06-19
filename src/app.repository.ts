@@ -1,15 +1,10 @@
 import type { BookStatus, IBook } from "./interfaces/IBook";
 import type { CreateBookDTO } from "./interfaces/CreateBookDTO";
+import { handleFetchError } from "./lib/handle-fetch-error";
 
 const { VITE_DEV_API_URL, VITE_PROD_API_URL, DEV } = import.meta.env;
 
 const BASE_URL = DEV ? VITE_DEV_API_URL : VITE_PROD_API_URL;
-
-function handleFetchError(response: Response): void {
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-}
 
 export async function getAll(): Promise<IBook[]> {
   const response = await fetch(`${VITE_DEV_API_URL}/books`);
@@ -48,4 +43,13 @@ export async function updateStatus(
   handleFetchError(response);
 
   return await response.json();
+}
+
+export async function deleteBook(bookId: string): Promise<void> {
+  const response = await fetch(`${BASE_URL}/books/${bookId}`, {
+    method: "DELETE",
+  });
+
+  handleFetchError(response);
+  return;
 }

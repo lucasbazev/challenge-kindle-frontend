@@ -10,14 +10,14 @@ export default function App() {
     bookModalOpen,
     books,
     loading,
-    handleAddBook,
+    handleClickAdd,
     handleSelectBook,
     handleCloseBookModal,
   } = useAppViewModel();
 
   return (
     <div className="w-screen min-h-screen bg-gray-100">
-      <Header onAddBook={handleAddBook} />
+      <Header onAddBook={handleClickAdd} />
 
       <main className="container mx-auto w-screen py-16">
         <div className="space-y-4">
@@ -39,11 +39,13 @@ export default function App() {
         </div>
       </main>
 
-      <BookModal
-        isOpen={bookModalOpen}
-        book={selectedBook}
-        onClose={handleCloseBookModal}
-      />
+      {bookModalOpen && (
+        <BookModal
+          isOpen={bookModalOpen}
+          book={selectedBook}
+          onClose={handleCloseBookModal}
+        />
+      )}
     </div>
   );
 }

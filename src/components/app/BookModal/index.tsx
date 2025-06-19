@@ -21,10 +21,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BOOK_STATUS_OPTIONS } from "./book-modal.constants";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { cn } from "@/lib/utils";
 
 export function BookModal({ ...props }: IBookModal) {
   const { book, isOpen, onClose, loadingAction } = props;
-  const { modalTitle, handleConfirmAction } = useBookModalViewModel(props);
+  const { form, modalTitle, handleAddBook, handleRemoveBook } =
+    useBookModalViewModel(props);
 
   return (
     <Dialog
@@ -34,47 +43,99 @@ export function BookModal({ ...props }: IBookModal) {
       }}
       {...props}
     >
-      <form>
+      <Form {...form}>
         <DialogContent className="max-w-[90%] rounded-xl">
           <DialogHeader className="my-4">
             <DialogTitle>{modalTitle}</DialogTitle>
           </DialogHeader>
+
           <div className="space-y-6">
             <div className="space-y-2">
               <Label>Título</Label>
-              <Input
-                placeholder="Título do livro"
-                defaultValue={book?.title || ""}
+
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Título do livro"
+                        disabled={!!book}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
             <div className="space-y-2">
               <Label>Descrição</Label>
-              <Textarea
-                placeholder="Descrição do livro"
-                defaultValue={book?.description}
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Descrição do livro"
+                        disabled={!!book}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
             <div className="space-y-2">
               <Label>Status</Label>
 
-              <Select defaultValue={book?.status}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Status atual de leitura" />
-                </SelectTrigger>
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Status atual de leitura" />
+                          </SelectTrigger>
+                        </FormControl>
 
-                <SelectContent>
-                  {BOOK_STATUS_OPTIONS.map((option) => (
-                    <SelectItem key={option.value} {...option}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                        <SelectContent>
+                          {BOOK_STATUS_OPTIONS.map((option) => (
+                            <SelectItem key={option.value} {...option}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
           </div>
-          <DialogFooter className="mt-4 flex flex-col md:flex-row items-center gap-2">
+
+          <DialogFooter
+            className={cn(
+              "mt-4 flex flex-col md:flex-row items-center gap-2",
+              book?._id && "flex-col-reverse md:flex-row-reverse",
+            )}
+          >
             <DialogClose asChild>
               <Button variant="outline" className="w-1/2" onClick={onClose}>
                 Fechar
@@ -83,14 +144,19 @@ export function BookModal({ ...props }: IBookModal) {
 
             <Button
               disabled={loadingAction}
-              className="w-1/2"
-              onClick={handleConfirmAction}
+              variant={book?._id ? "outline" : "default"}
+              onClick={book?._id ? handleRemoveBook : handleAddBook}
+              className={cn(
+                "w-1/2 ",
+                book?._id &&
+                  "border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-200",
+              )}
             >
-              {loadingAction ? <Loading /> : "Salvar"}
+              {loadingAction ? <Loading /> : book?._id ? "Remover" : "Salvar"}
             </Button>
           </DialogFooter>
         </DialogContent>
-      </form>
+      </Form>
     </Dialog>
   );
 }
