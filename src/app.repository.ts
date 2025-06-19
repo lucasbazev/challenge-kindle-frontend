@@ -7,7 +7,7 @@ const { VITE_DEV_API_URL, VITE_PROD_API_URL, DEV } = import.meta.env;
 const BASE_URL = DEV ? VITE_DEV_API_URL : VITE_PROD_API_URL;
 
 export async function getAll(query?: string): Promise<IBook[]> {
-  const response = await fetch(`${VITE_DEV_API_URL}/books?${query}`);
+  const response = await fetch(`${BASE_URL}/books?${query}`);
 
   handleFetchError(response);
 
